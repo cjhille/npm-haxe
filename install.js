@@ -101,17 +101,17 @@ function clean(cb) {
 function downloadHaxe( cb ) {
 	console.log("Getting Haxe " + haxeVersion + (nightly ? " (nightly=" + nightly + ")" : "") );
 	var url = haxeUrl(platform, arch, haxeVersion, nightly);
-	downloadAndMoveTo( url , haxeDir, cb );
+	downloadAndMoveTo( url , haxeDir, 0, cb );
 }
 
 function downloadHaxelib( cb ) {
 	console.log("Getting Haxelib " + haxelibVersion );
 	var url = "https://github.com/HaxeFoundation/haxelib/archive/" + haxelibVersion + ".tar.gz";
-	downloadAndMoveTo( url , haxelibDir, cb );
+	downloadAndMoveTo( url , haxelibDir, 1, cb );
 }
 
-function downloadAndMoveTo( url, targetDir, cb ) {
-	Download({ extract: true, strip: 1 })
+function downloadAndMoveTo( url, targetDir, nSubDir, cb ) {
+	Download({ extract: true, strip: nSubDir })
 		.get( url )
 		.dest( targetDir )
 		.use(downloadStatus())
